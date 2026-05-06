@@ -20,29 +20,29 @@ The conversation history for each session is stored in PostgreSQL and passed to 
 Classifies the incoming query and routes it to the correct department. Does not answer questions directly.
 
 **Shipping Agent**
-Handles delivery timelines, order tracking, shipping options, lost packages, and international shipping queries.
+Handles delivery timelines, order tracking, shipping options, lost packages and international shipping queries.
 
 **Returns Agent**
-Handles return eligibility, return initiation, damaged item reports, and refund processing.
+Handles return eligibility, return initiation, damaged item reports and refund processing.
 
 **Billing Agent**
-Handles payment methods, failed transactions, invoices, duplicate charges, and discount codes.
+Handles payment methods, failed transactions, invoices, duplicate charges and discount codes.
 
 **Account Agent**
-Handles password resets, account lockouts, two-factor authentication, loyalty points, and profile settings.
+Handles password resets, account lockouts, two-factor authentication, loyalty points and profile settings.
 
 ---
 
 ## Tech Stack
 
-- LangGraph — multi-agent graph orchestration
-- LangChain — agent and RAG framework
-- OpenAI GPT-4o-mini — language model
-- Pinecone — vector database with namespace isolation per agent
-- PostgreSQL — persistent session and message storage
-- FastAPI — async backend API with streaming support
-- Server-Sent Events — real-time word-by-word response streaming
-- LangSmith — agent observability and performance monitoring
+- LangGraph  (multi-agent graph orchestration)
+- LangChain  (agent and RAG framework)
+- OpenAI GPT-4o-mini
+- Pinecone  (vector database with namespace isolation per agent)
+- PostgreSQL  (persistent session and message storage)
+- FastAPI  (async backend API with streaming support)
+- Server-Sent Events  (real-time word-by-word response streaming)
+- LangSmith (agent observability and performance monitoring)
 
 ---
 
@@ -83,7 +83,7 @@ PINECONE_REGION=
 DATABASE_URL=postgresql://username:password@localhost:5432/chatbot_db
 LANGCHAIN_API_KEY=
 LANGCHAIN_TRACING_V2=true
-LANGCHAIN_PROJECT=project3-support-agent
+LANGCHAIN_PROJECT= Customer-support-agent
 ```
 
 **3. Create PostgreSQL database**
@@ -106,13 +106,13 @@ Open `http://localhost:8000`
 
 ## Key Implementation Details
 
-**Namespace isolation** — Each agent's knowledge base lives in a separate Pinecone namespace. The retriever is scoped at query time so agents never cross-contaminate each other's data.
+**Namespace isolation**  Each agent's knowledge base lives in a separate Pinecone namespace. The retriever is scoped at query time so agents never cross-contaminate each other's data.
 
-**Persistent memory** — Each browser session gets a UUID stored in localStorage. On every request, the full message history is loaded from PostgreSQL and passed to the agent as context.
+**Persistent memory**  Each browser session gets a UUID stored in localStorage. On every request, the full message history is loaded from PostgreSQL and passed to the agent as context.
 
 **Streaming** — The `/chat/stream` endpoint uses FastAPI's `StreamingResponse` with Server-Sent Events. The frontend processes the stream with a `ReadableStream` reader and renders tokens as they arrive.
 
-**Observability** — LangSmith traces every run automatically when the environment variables are set. No additional instrumentation required.
+**Observability**  LangSmith traces every run automatically when the environment variables are set. No additional instrumentation required.
 
 ---
 
