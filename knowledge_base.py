@@ -11,10 +11,10 @@ load_dotenv()
 
 # PDF TO NAMESPACE MAPPING
 PDF_NAMESPACE_MAP = {
-    r"D:\New folder 2\docs\shipping_policy.pdf": "shipping",
-    r"D:\New folder 2\docs\returns_policy.pdf":  "returns",
-    r"D:\New folder 2\docs\billing_policy.pdf":  "billing",
-    r"D:\New folder 2\docs\account_policy.pdf":  "account",
+    r"D:\Customer support AI Agent\docs\shipping_policy.pdf": "shipping",
+    r"D:\Customer support AI Agent\docs\returns_policy.pdf":  "returns",
+    r"D:\Customer support AI Agent\docs\billing_policy.pdf":  "billing",
+    r"D:\Customer support AI Agent\docs\account_policy.pdf":  "account",
 }
 
 # TEXT SPLITTER CONFIGURATION
