@@ -46,24 +46,6 @@ Handles password resets, account lockouts, two-factor authentication, loyalty po
 
 ---
 
-## Project Structure
-
-```
-project3/
-├── database.py          # PostgreSQL session and message management
-├── tools.py             # RAG search tools scoped per Pinecone namespace
-├── graph.py             # LangGraph multi-agent workflow
-├── main.py              # FastAPI backend with streaming endpoint
-├── knowledge_base.py    # PDF ingestion pipeline into Pinecone
-├── requirements.txt
-├── .env.example
-└── frontend/
-    ├── index.html
-    └── images/
-```
-
----
-
 ## Setup
 
 **1. Install dependencies**
