@@ -8,8 +8,12 @@ from fastapi.staticfiles import StaticFiles
 import psycopg2.extras
 from pydantic import BaseModel
 from dotenv import load_dotenv
-
-from graph import run_graph, support_graph, AgentState
+from langchain_openai import ChatOpenAI
+from graph import (
+        shipping_agent, returns_agent,
+        billing_agent, account_agent
+        )
+from langchain_core.messages import HumanMessage, AIMessage
 from database import (
     init_database,
     create_session,
@@ -145,7 +149,6 @@ async def chat_stream(request: StreamRequest):
                 response=""
             )
 
-            from langchain_openai import ChatOpenAI
             supervisor_llm = ChatOpenAI(
                 model="gpt-4o-mini",
                 temperature=0,
@@ -164,11 +167,6 @@ Respond with ONLY the category word."""
 
             yield f"data: {json.dumps({'type': 'category', 'content': category})}\n\n"
 
-            from graph import (
-                shipping_agent, returns_agent,
-                billing_agent, account_agent
-            )
-            from langchain_core.messages import HumanMessage, AIMessage
 
             agent_map = {
                 "shipping": shipping_agent,
@@ -220,7 +218,8 @@ Respond with ONLY the category word."""
             "X-Accel-Buffering": "no"
         }
     )
-
-@app.get("/health")
+    
+    
+    @app.get("/health")
 async def health_check():
     return {"status": "ok", "message": "Hasnat's Chatbot API is running"}
