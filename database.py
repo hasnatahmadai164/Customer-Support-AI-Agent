@@ -17,9 +17,6 @@ def get_connection():
     We create a fresh connection per operation rather than
     keeping one open permanently. This is safer and avoids
     connection timeout issues in long-running servers.
-
-    cursor_factory=RealDictCursor makes query results return
-    as Python dictionaries instead of tuples — much easier to work with.
     """
     conn = psycopg2.connect(DATABASE_URL)
     return conn
@@ -30,7 +27,7 @@ def init_database():
     Creates the sessions and messages tables if they don't exist.
     Called once when the FastAPI server starts.
 
-    This is idempotent — safe to call multiple times.
+    This is idempotent, safe to call multiple times.
     CREATE TABLE IF NOT EXISTS never fails if table already exists.
     """
     conn = get_connection()
@@ -126,7 +123,7 @@ def get_chat_history(session_id: str) -> list:
         [{"role": "user", "content": "..."}, ...]
 
     This is how the agent gets memory of previous turns even
-    after a page refresh — we reload history from PostgreSQL.
+    after a page refresh, we reload history from PostgreSQL.
 
     Args:
         session_id: The UUID of the session to load.
